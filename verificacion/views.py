@@ -1,36 +1,49 @@
 from django.http import HttpResponse
 from django.shortcuts import render
-import feedparser
+import urllib.request
+
+from html.parser import HTMLParser
+
+class MyHTMLParser(HTMLParser):
+
+    def init(self):
+        self.text = ""
+
+    def handle_starttag(self, tag, attrs):
+        print("Encountered a start tag:", tag)
+
+    def handle_endtag(self, tag):
+        print("Encountered an end tag :", tag)
+
+    def handle_data(self, data):
+        print("Encountered some data  :", data)
+        self.text += str(data)
+        self.text += " "
 
 from .forms import InputForm
 from .strings_counter import StringsCounter
 
 def index(request):
-    text = ""
-    link = "http://ep00.epimg.net/rss/elpais/portada.xml"
-    feed = feedparser.parse(link)
-    print(feed["channel"]["title"])
+    dic = None
+    if request.method == 'POST':
+        form = InputForm(request.POST)
+        if form.is_valid():
+            input_received = form.cleaned_data['input']
+            print(type(input_received))
 
-    for item in feed["items"]:
-        text += item["title"]
-        text += " "
-        text += item["description"] 
-        # text += item["content:encoded"]
-        try:
-            text += " "
-            text += item.content        
-        except Exception:
-            pass
-        # print(item["title"])
-        # print(item["description"])
-        # print("\n\n")
+            link = input_received
+            f = urllib.request.urlopen(link)
+            text = f.read()
+            parser = MyHTMLParser()
+            parser.init()
+            parser.feed(str(text))
 
-
-    sc = StringsCounter()
-    dic = sc.count_strings(text)
-    # print(dic)
+            sc = StringsCounter()
+            dic = sc.count_strings(parser.text)
+            # print(dic)
 
     context = {
-        'palabras': dic
+        'palabras': dic,
+        'form': InputForm()
     }
     return render(request, 'verificacion/index.html', context)
