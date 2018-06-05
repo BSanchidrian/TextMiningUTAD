@@ -10,6 +10,7 @@ La aplicacion usa Django 2.0, la cual necesita Python 3.4 o superior.
 ```bash
 sudo apt install python3-pip
 sudo pip3 install django
+sudo pip3 install feedparser
 ```
 
 Se puede verificar la version de Django usando:
