@@ -11,6 +11,7 @@ def index(request):
     feed = feedparser.parse(link)
     print(feed["channel"]["title"])
 
+    # print(feed["channel"]["pubDate"])
     for item in feed["items"]:
         text += item["title"]
         text += " "
