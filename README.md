@@ -10,7 +10,17 @@ La aplicacion usa Django 2.0, la cual necesita Python 3.4 o superior.
 ```bash
 sudo apt install python3-pip
 sudo pip3 install django
-sudo pip3 install feedparser
+
+# dependencias
+sudo pip3 install redis
+sudo pip3 install bs4
+sudo pip3 install selenium
+```
+
+* Es necesario que chromedriver esté inluido en el PATH para poder pasar los test que utilizan Selenium
+
+```bash
+python3 manage.py test
 ```
 
 Se puede verificar la version de Django usando:

@@ -1,11 +1,13 @@
-from django.http import HttpResponse
-from django.shortcuts import render
 from urllib.request import urlopen
+
 from bs4 import BeautifulSoup
-from bs4.element import Comment 
+from bs4.element import Comment
+from django.shortcuts import render
+
 from .forms import InputForm
+from .strings_counter import RedisClient
 from .strings_counter import StringsCounter
-from .strings_counter import RedisServer
+
 
 def tag_visible(element):
     if element.parent.name in ['p', 'a', 'span']:
@@ -18,13 +20,14 @@ def tag_visible(element):
 def text_from_html(body):
     soup = BeautifulSoup(body, 'html.parser')
     texts = soup.findAll(text=True)
-    visible_texts = filter(tag_visible, texts) 
+    visible_texts = filter(tag_visible, texts)
     return u" ".join(t.strip() for t in visible_texts)
+
 
 def index(request):
     dic = None
     text = ""
-    redis = RedisServer()
+    # redis = RedisClient()
 
     if request.method == 'POST':
         form = InputForm(request.POST)
@@ -34,17 +37,21 @@ def index(request):
             print(date)
             link = input_received
             html = urlopen(link)
-            soup = BeautifulSoup(html,'html.parser')
+            soup = BeautifulSoup(html, 'html.parser')
 
             for tag in soup.findAll('p'):
                 text += " " + str(tag.get_text())
 
             sc = StringsCounter()
             dic = sc.count_strings(text)
-            redis.save_dic(date, dic)
+            # redis.save_dic(date, dic)
 
     context = {
         'palabras': dic,
         'form': InputForm()
     }
     return render(request, 'verificacion/index.html', context)
+
+
+def test(request):
+    return render(request, 'verificacion/test.html')
