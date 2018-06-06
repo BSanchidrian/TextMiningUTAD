@@ -1,6 +1,47 @@
 # coding=utf-8
 
 import operator
+import redis
+
+
+
+
+class RedisServer(object):
+    def __init__(self):
+        try:
+            self.r = redis.StrictRedis(
+                host='54.149.126.184',
+                port=6379)
+            print conn
+            r.ping()
+            print 'Connected!'
+        except Exception as ex:
+            print 'Error:', ex
+            exit('Failed to connect, terminating.')
+
+    def save_dic(self, date, dic):
+        for key in dic:
+            r.hset(str(date),key[0], key[1])
+
+    def imprimir_dic(self, date):
+        r.hgetall()
+
+
+
+
+    def query(self):
+        ssh_stdin = ssh_stdout = ssh_stderr = None
+        # Connect/ssh to an instance
+        try:
+            ssh_stdin, ssh_stdout, ssh_stderr = ssh.exec_command(cmd)
+        except Exception as e:
+            sys.stderr.write("SSH connection error: {0}".format(e))
+
+        if ssh_stdout:
+            return ssh_stdout.read()
+        if ssh_stderr:
+            return ssh_stderr.read()
+
 
 
 class StringsCounter(object):
