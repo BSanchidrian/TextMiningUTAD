@@ -23,7 +23,6 @@ def text_from_html(body):
 def index(request):
     dic = None
     text = ""
-
     if request.method == 'POST':
         form = InputForm(request.POST)
         if form.is_valid():
