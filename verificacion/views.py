@@ -2,7 +2,7 @@ from django.http import HttpResponse
 from django.shortcuts import render
 from urllib.request import urlopen
 from bs4 import BeautifulSoup
-from bs4.element import Comment 
+from bs4.element import Comment
 from .forms import InputForm
 from .strings_counter import StringsCounter
 from .strings_counter import RedisServer
@@ -18,13 +18,14 @@ def tag_visible(element):
 def text_from_html(body):
     soup = BeautifulSoup(body, 'html.parser')
     texts = soup.findAll(text=True)
-    visible_texts = filter(tag_visible, texts) 
+    visible_texts = filter(tag_visible, texts)
     return u" ".join(t.strip() for t in visible_texts)
 
 def index(request):
     dic = None
     text = ""
     redis = RedisServer()
+    r = {}
 
     if request.method == 'POST':
         form = InputForm(request.POST)
@@ -42,9 +43,12 @@ def index(request):
             sc = StringsCounter()
             dic = sc.count_strings(text)
             redis.save_dic(date, dic)
+            r = redis.imprimir_dic(date)
+            for keys in r:
+                print(str(keys).replace("b'", "").replace("'", ""), str(r[keys]).replace("b'", "").replace("'", ""))
 
     context = {
-        'palabras': dic,
+        'palabras': redis.normalize_data(r),
         'form': InputForm()
     }
     return render(request, 'verificacion/index.html', context)

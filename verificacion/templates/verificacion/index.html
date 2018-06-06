@@ -15,8 +15,8 @@
     </form>
 
     <ul>
-        {% for palabra in palabras %}
-            <li>{{ palabra.0 }} - {{ palabra.1 }}</li>
+        {% for key, value in palabras.items %}
+            <li>{{ key }} - {{ value }}</li>
         {% endfor %}
     </ul>
 </body>

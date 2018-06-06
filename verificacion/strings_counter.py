@@ -2,6 +2,7 @@
 
 import operator
 import redis
+import sys
 
 class RedisServer(object):
     def __init__(self):
@@ -19,12 +20,22 @@ class RedisServer(object):
             exit('Failed to connect, terminating.')
 
     def save_dic(self, date, dic):
-        self.r.delete(str(date))
         for key in dic:
-            self.r.hset(str(date),key[0], key[1])
+            if (key[0], self.imprimir_dic(date)):
+                self.r.hincrby(str(date), key[0], key[1])
+            else:
+                self.r.hset(str(date),key[0], key[1])
 
     def imprimir_dic(self, date):
-        self.r.hgetall(date)
+        result = self.r.hgetall(date)
+        return result
+
+    def normalize_data(self, dic):
+        result = {}
+        for keys in dic:
+            result[str(keys).replace("b'", "").replace("'", "")] = str(dic[keys]).replace("b'", "").replace("'", "")
+
+        return result
 
 class StringsCounter(object):
     def count_strings(self, text):
