@@ -5,6 +5,7 @@ from bs4 import BeautifulSoup
 from bs4.element import Comment 
 from .forms import InputForm
 from .strings_counter import StringsCounter
+from .strings_counter import RedisServer
 
 def tag_visible(element):
     if element.parent.name in ['p', 'a', 'span']:
@@ -37,7 +38,9 @@ def index(request):
                 text += " " + str(tag.get_text())
 
             sc = StringsCounter()
+            #redis = RedisServer()
             dic = sc.count_strings(text)
+            #redis.save_dic()
 
     context = {
         'palabras': dic,
