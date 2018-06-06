@@ -37,7 +37,7 @@ class Tests(TestCase):
         solution=['hola','caracola','esto', 'texto', 'de', 'prueba']
         result = stringsCounter.count_strings(text)
         same = True
-        for i in range(0,len(solution)):
+        for i in range(0,len(result)):
             if result[i][0] not in solution == True:
                 same = False
                 break
