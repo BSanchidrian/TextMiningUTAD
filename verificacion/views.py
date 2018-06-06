@@ -24,6 +24,8 @@ def text_from_html(body):
 def index(request):
     dic = None
     text = ""
+    redis = RedisServer()
+
     if request.method == 'POST':
         form = InputForm(request.POST)
         if form.is_valid():
@@ -38,9 +40,8 @@ def index(request):
                 text += " " + str(tag.get_text())
 
             sc = StringsCounter()
-            #redis = RedisServer()
             dic = sc.count_strings(text)
-            #redis.save_dic()
+            redis.save_dic(date, dic)
 
     context = {
         'palabras': dic,
