@@ -4,6 +4,7 @@ import feedparser
 
 from .forms import InputForm
 from .strings_counter import StringsCounter
+from .strings_counter import RedisServer
 
 def index(request):
     text = ""
@@ -15,11 +16,11 @@ def index(request):
     for item in feed["items"]:
         text += item["title"]
         text += " "
-        text += item["description"] 
+        text += item["description"]
         # text += item["content:encoded"]
         try:
             text += " "
-            text += item.content        
+            text += item.content
         except Exception:
             pass
         # print(item["title"])
@@ -28,7 +29,12 @@ def index(request):
 
 
     sc = StringsCounter()
+    #redis = RedisServer()
+
     dic = sc.count_strings(text)
+
+    #redis.save_dic()
+
     # print(dic)
 
     context = {
