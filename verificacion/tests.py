@@ -3,6 +3,7 @@ import collections
 from .strings_counter import StringsCounter
 from .strings_counter import RedisClient
 from selenium import webdriver
+from selenium.webdriver import FirefoxOptions
 from selenium.webdriver.common.keys import Keys
 
 stringsCounter = StringsCounter()
@@ -190,7 +191,9 @@ class Tests(TestCase):
         self.assertEqual(collections.Counter(result), collections.Counter(solution))
 
     def test_text_reset(self):
-        driver = webdriver.Chrome()
+        opts = FirefoxOptions()
+        opts.add_argument("--headless")
+        driver = webdriver.Firefox(firefox_options=opts)
         driver.get("http://127.0.0.1:8000/verificacion/")
         element = driver.find_element_by_id("id_input")
         element.send_keys("text")
@@ -199,7 +202,9 @@ class Tests(TestCase):
         self.assertIn("", driver.find_element_by_id("id_input").text)
 
     def test_longtext_reset(self):
-        driver = webdriver.Chrome()
+        opts = FirefoxOptions()
+        opts.add_argument("--headless")
+        driver = webdriver.Firefox(firefox_options=opts)
         driver.get("http://127.0.0.1:8000/verificacion/")
         element = driver.find_element_by_id("id_input")
         element.send_keys(
@@ -209,7 +214,9 @@ class Tests(TestCase):
         self.assertIn("", driver.find_element_by_id("id_input").text)
 
     def test_empty_reset(self):
-        driver = webdriver.Chrome()
+        opts = FirefoxOptions()
+        opts.add_argument("--headless")
+        driver = webdriver.Firefox(firefox_options=opts)
         driver.get("http://127.0.0.1:8000/verificacion/")
         element = driver.find_element_by_id("id_input")
         element.send_keys(" ")
@@ -218,7 +225,9 @@ class Tests(TestCase):
         self.assertIn("", driver.find_element_by_id("id_input").text)
 
     def test_url_submit(self):
-        driver = webdriver.Chrome()
+        opts = FirefoxOptions()
+        opts.add_argument("--headless")
+        driver = webdriver.Firefox(firefox_options=opts)
         driver.get("http://127.0.0.1:8000/verificacion/")
         element = driver.find_element_by_id("id_input")
         element.send_keys("http://localhost:8000/verificacion/test")
@@ -236,7 +245,9 @@ class Tests(TestCase):
         self.assertTrue(adios_count)
 
     def test_wrong_url_submit(self):
-        driver = webdriver.Chrome()
+        opts = FirefoxOptions()
+        opts.add_argument("--headless")
+        driver = webdriver.Firefox(firefox_options=opts)
         driver.get("http://127.0.0.1:8000/verificacion/")
         element = driver.find_element_by_id("id_input")
         element.send_keys("badurl")

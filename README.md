@@ -15,7 +15,7 @@ sudo pip3 install django
 sudo pip3 install -r requirements.txt
 ```
 
-* Es necesario que chromedriver esté inluido en el PATH para poder pasar los test que utilizan Selenium
+* Es necesario que gekodriver (Firefox) esté inluido en el PATH para poder pasar los test que utilizan Selenium
 
 ```bash
 python3 manage.py test
