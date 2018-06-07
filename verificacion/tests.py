@@ -239,10 +239,11 @@ class Tests(TestCase):
         driver = webdriver.Chrome()
         driver.get("http://127.0.0.1:8000/verificacion/")
         element = driver.find_element_by_id("id_input")
-        element.send_keys("badurl:D")
+        element.send_keys("badurl")
         button = driver.find_element_by_id("submit")
         button.click()
-        self.assertEqual(driver.find_element_by_id("error").text, "wrong url")
+        element = driver.find_element_by_id("error")
+        self.assertEqual(element.text, "Wrong url")
 
     def test_db_connection(self):
         # self.assertIfNotRaise => https://stackoverflow.com/questions/4319825/python-unittest-opposite-of-assertraises

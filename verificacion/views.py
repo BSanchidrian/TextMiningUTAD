@@ -34,9 +34,11 @@ def index(request):
         if form.is_valid():
             input_received = form.cleaned_data['input']
             date = form.cleaned_data['date']
-            print(date)
             link = input_received
-            html = urlopen(link)
+            try:
+                html = urlopen(link)
+            except Exception:
+                return render(request, 'verificacion/error.html')
             soup = BeautifulSoup(html, 'html.parser')
 
             for tag in soup.findAll('p'):

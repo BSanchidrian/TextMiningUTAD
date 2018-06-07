@@ -10,7 +10,7 @@ class RedisClient(object):
             self.r = redis.StrictRedis(
                 # host='54.149.126.184',
                 # password='veri',
-                host='127.0.0.1',
+                host='35.180.92.98',
                 port=6379,
                 db=0)
             self.r.ping()
