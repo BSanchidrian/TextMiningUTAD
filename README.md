@@ -12,9 +12,7 @@ sudo apt install python3-pip
 sudo pip3 install django
 
 # dependencias
-sudo pip3 install redis
-sudo pip3 install bs4
-sudo pip3 install selenium
+sudo pip3 install -r requirements.txt
 ```
 
 * Es necesario que chromedriver esté inluido en el PATH para poder pasar los test que utilizan Selenium

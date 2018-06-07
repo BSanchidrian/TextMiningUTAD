@@ -1,4 +1,4 @@
-django
+Django
 redis
 bs4
 selenium

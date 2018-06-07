@@ -5,24 +5,9 @@ from urllib.request import urlopen
 from bs4 import BeautifulSoup
 from bs4.element import Comment
 from .forms import InputForm
+from .forms import DateForm
 from .strings_counter import RedisClient
 from .strings_counter import StringsCounter
-
-
-def tag_visible(element):
-    if element.parent.name in ['p', 'a', 'span']:
-        return False
-    if isinstance(element, Comment):
-        return False
-    return True
-
-
-def text_from_html(body):
-    soup = BeautifulSoup(body, 'html.parser')
-    texts = soup.findAll(text=True)
-    visible_texts = filter(tag_visible, texts)
-    return u" ".join(t.strip() for t in visible_texts)
-
 
 def index(request):
     dic = None
@@ -50,11 +35,11 @@ def index(request):
             dic = sc.count_strings(text)
             redis.save_dic(date, dic)
             r = redis.imprimir_dic(date)
-            for keys in r:
-                print(str(keys).replace("b'", "").replace("'", ""), str(r[keys]).replace("b'", "").replace("'", ""))
+            # for keys in r:
+                # print(str(keys).replace("b'", "").replace("'", ""), str(r[keys]).replace("b'", "").replace("'", ""))
 
     context = {
-        'palabras': redis.normalize_data(r),
+        'palabras': dic,
         'fecha' : date,
         'form': InputForm()
     }
@@ -63,3 +48,18 @@ def index(request):
 
 def test(request):
     return render(request, 'verificacion/test.html')
+
+def history(request):
+    redis = RedisClient()
+    r = {}
+    if request.method == 'POST':
+        form = DateForm(request.POST)
+        if form.is_valid():
+            date = form.cleaned_data['date']
+            r = redis.imprimir_dic(date)
+
+    context = {
+        'form': DateForm(),
+        'palabras': redis.normalize_data(r)
+    }
+    return render(request, 'verificacion/history.html', context)

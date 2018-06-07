@@ -16,6 +16,7 @@
       <input class="btn btn-outline-success my-2 my-sm-0" type="reset" value="Reset" id="reset" />
       <input class="btn btn-outline-success my-2 my-sm-0" type="submit" value="Submit" id="submit" />
     </form>
+    <a href="/verificacion/history">Ver historial base de datos</a>
   </nav>
   <div class="container-fluid">
 
@@ -24,10 +25,10 @@
         Fecha: {{fecha}}
       </div>
       <ul class="list-group list-group-flush">
-        {% for key, value in palabras.items %}
+        {% for palabra in palabras %}
         <li class="list-group-item d-flex justify-content-between align-items-center">
-          {{ key }}
-          <span class="badge badge-primary badge-pill">{{ value }}</span>
+          {{ palabra.0 }}
+          <span class="badge badge-primary badge-pill">{{ palabra.1 }}</span>
         </li>
         {% endfor %}
       </ul>
