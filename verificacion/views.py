@@ -26,6 +26,7 @@ def index(request):
     text = ""
     redis = RedisServer()
     r = {}
+    date = ""
 
     if request.method == 'POST':
         form = InputForm(request.POST)
@@ -49,6 +50,7 @@ def index(request):
 
     context = {
         'palabras': redis.normalize_data(r),
+        'fecha' : date,
         'form': InputForm()
     }
     return render(request, 'verificacion/index.html', context)
