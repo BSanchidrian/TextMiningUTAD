@@ -2,8 +2,6 @@ from urllib.request import urlopen
 
 from bs4 import BeautifulSoup
 from bs4.element import Comment
-from django.shortcuts import render
-
 from .forms import InputForm
 from .strings_counter import RedisClient
 from .strings_counter import StringsCounter
@@ -27,7 +25,9 @@ def text_from_html(body):
 def index(request):
     dic = None
     text = ""
-    # redis = RedisClient()
+    redis = RedisClient()
+    r = {}
+    date = ""
 
     if request.method == 'POST':
         form = InputForm(request.POST)
@@ -46,10 +46,18 @@ def index(request):
 
             sc = StringsCounter()
             dic = sc.count_strings(text)
+<<<<<<< HEAD
+            redis.save_dic(date, dic)
+            r = redis.imprimir_dic(date)
+            for keys in r:
+                print(str(keys).replace("b'", "").replace("'", ""), str(r[keys]).replace("b'", "").replace("'", ""))
+=======
             # redis.save_dic(date, dic)
+>>>>>>> master
 
     context = {
-        'palabras': dic,
+        'palabras': redis.normalize_data(r),
+        'fecha' : date,
         'form': InputForm()
     }
     return render(request, 'verificacion/index.html', context)
