@@ -1,5 +1,7 @@
 # TextMiningUTAD
 
+[![Build Status](https://travis-ci.org/S7KYuuki/TextMiningUTAD.svg?branch=master)](https://travis-ci.org/S7KYuuki/TextMiningUTAD)
+
 Practica final de verificación y desarrollo de programas
 
 

@@ -233,16 +233,9 @@ class Tests(TestCase):
         element.send_keys("http://localhost:8000/verificacion/test")
         button = driver.find_element_by_id("submit")
         button.click()
-        words = driver.find_elements_by_css_selector("li")
-        hola_count = False
-        adios_count = False
+        words = driver.find_elements_by_class("palabra")
         for word in words:
-            if word.text == "hola - 2":
-                hola_count = True
-            if word.text == "adios - 2":
-                adios_count = True
-        self.assertTrue(hola_count)
-        self.assertTrue(adios_count)
+            self.assertEqual(word.text, "2")
 
     def test_wrong_url_submit(self):
         opts = FirefoxOptions()
