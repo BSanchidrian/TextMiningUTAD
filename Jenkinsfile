@@ -3,11 +3,7 @@ pipeline {
   stages {
     stage('Install') {
       steps {
-        sh 'jenkins ALL=(ALL) NOPASSWD: ALL'
-        sh 'sudo pip3 install django '
-        sh 'sudo pip3 install redis'
-        sh 'sudo pip3 install bs4'
-        sh 'sudo pip3 install selenium'
+        sh 'pip install -r requirements.txt'
       }
     }
     stage('Test') {
