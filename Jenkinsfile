@@ -8,9 +8,7 @@ pipeline {
     }
     stage('Install') {
       steps {
-        sh '''source bin/activate
-        pip install -r requirements.txt
-        deactivate'''
+        sh 'pip install -r requirements.txt'
       }
     }
     stage('Test') {
