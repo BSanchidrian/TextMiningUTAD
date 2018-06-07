@@ -1,0 +1,4 @@
+django
+redis
+bs4
+selenium
