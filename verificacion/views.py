@@ -46,14 +46,10 @@ def index(request):
 
             sc = StringsCounter()
             dic = sc.count_strings(text)
-<<<<<<< HEAD
             redis.save_dic(date, dic)
             r = redis.imprimir_dic(date)
             for keys in r:
                 print(str(keys).replace("b'", "").replace("'", ""), str(r[keys]).replace("b'", "").replace("'", ""))
-=======
-            # redis.save_dic(date, dic)
->>>>>>> master
 
     context = {
         'palabras': redis.normalize_data(r),
